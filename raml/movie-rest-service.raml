@@ -1,0 +1,112 @@
+#%RAML 1.0
+title: movies-info-rest-app
+version: v1.0
+mediaType: application/json
+types:
+  Movie:
+    type: object
+    properties:
+      name: string
+      year: integer
+      format: string
+      actor_fullname: string
+  Error:
+    type: object
+    properties:
+      code: integer
+ 
+/API:
+  /movies:
+    get:
+      description: get all movies
+      responses:
+        200:
+          body:
+            application/json:
+              type: object
+              properties:
+                data: Movie[]
+        401:
+          body:
+            application/json:
+              type: Error
+    post:
+      description: add movie
+      queryParameters:
+        name?: string
+        year?: integer
+        format?: string
+        actor_fullname?: string
+      responses:
+        200:
+          body:
+            application/json:
+              type: object
+              properties:
+                data: Movie[]
+        401:
+            body:
+                application/json:
+                  type: Error         
+    /{id}:
+      get:
+        description: get movie
+        responses:
+          200:
+            body:
+              application/json:
+                type: object
+                properties:
+                  data: Movie[]
+          401:
+              body:
+                  application/json:
+                    type: Error 
+      patch:
+        description: update movie
+        queryParameters:
+          name?: string
+          year?: integer
+          format?: string
+          actor_fullname?: string
+        responses:
+          200:
+            body:
+              application/json:
+                type: object
+                properties:
+                  data: Movie[]
+          401:
+            body:
+                application/json:
+                  type: Error 
+      delete:
+          description: delete movie
+          body:
+            application/json:
+              type: object
+          responses:
+            200:
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    data: string
+            401:
+              body:
+                application/json:
+                  type: Error                     
+    /search:
+      post:
+        description: search movies by name or acter fullname
+        responses:
+          200:
+            body:
+              application/json:
+                type: object
+                properties:
+                  data: Movie[]
+          401:
+              body:
+                  application/json:
+                    type: Error                

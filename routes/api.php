@@ -17,16 +17,15 @@ use Illuminate\Http\Request;
 Route::post('login', 'AuthController@login');
 Route::post('register', 'AuthController@register');
 
+Route::get('movies', 'MovieController@movies');
+Route::get('movies/{id}', 'MovieController@getMovie')->where('id', '[0-9]+');
+Route::post('movies/search', 'MovieController@search');
+
 Route::middleware('auth:api')->group(function () {
     Route::post('movies', 'MovieController@addMovie');
     Route::patch('movies/{id}', 'MovieController@editMovie')->where('id', '[0-9]+');
     Route::delete('movies/{id}', 'MovieController@deleteMovie')->where('id', '[0-9]+');
 });
-
-Route::get('movies', 'MovieController@movies');
-Route::get('movies/{id}', 'MovieController@getMovie')->where('id', '[0-9]+');
-Route::post('movies/search', 'MovieController@search');
-
 
 
 
