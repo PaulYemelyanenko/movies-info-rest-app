@@ -8,25 +8,29 @@ use App\Services\MovieService;
 
 class MovieController extends Controller
 {
+    protected $movie;
 
+    public function __construct(Movie $movie)
+    {
+        $this->movie = $movie;
+    }
 
     public function movies()
     {
-        $movies = Movie::all();
-
-        return response()->json(['success' => $movies], 200);
+        return response()->json(['success' => $this->movie->all()], 200);
     }
 
 
     public function getMovie($id)
     {
-        $movie = Movie::find($id);
+        if($this->movie->find($id) !== null){
 
-        if(isset($movie) and !empty($movie)) {
-            return response()->json(['success' => $movie], 200);
+            return response()->json(['success' => $this->movie->find($id)], 200);
+
         }
 
-        return response()->json(['error' => 'Sorry. Movie is not finded'], 401);
+            return response()->json(['error' => 'Sorry. Movie is not finded'], 401);
+
     }
 
 
